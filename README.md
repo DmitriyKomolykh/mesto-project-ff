@@ -1,2 +1,1 @@
-# Проектная работа Mesto
-
+# Проект 5: Mesto на JavaScript.
