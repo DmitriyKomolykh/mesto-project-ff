@@ -1,6 +1,3 @@
-// Попаты
-const popupsArray = Array.from(document.querySelectorAll('.popup'));
-
 // функции для открытия всплывающих окон
 function openModal(popup) {
   popup.classList.add('popup_is-opened');
@@ -18,12 +15,9 @@ function closeModal(popup) {
 // функции для обработки клавиши Escape
 function handleEscClick(evt) {
   if (evt.key === 'Escape') {
-    const openedPopup = popupsArray.find(popup => popup.classList.contains('popup_is-opened'));
-    if (openedPopup) {
-      closeModal(openedPopup);
+    closeModal(document.querySelector('.popup_is-opened'));
     }
   }
-}
 
 // функции для обработки слушателя overlay click (за пределы модального окна)
 function handleClickOverlay(evt) { 
