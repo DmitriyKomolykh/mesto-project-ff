@@ -87,10 +87,6 @@ function handleProfileFormSubmit(evt) {
   const nameUser = nameInput.value;
   const aboutUser = jobInput.value;
 
-  // Выбор элементов, куда должны быть вставлены значения полей
-  const userName = document.querySelector('.profile__title');
-  const userJob = document.querySelector('.profile__description');
-
   // Установка новых значений с помощью textContent
   userName.textContent = nameUser;
   userJob.textContent = aboutUser;
