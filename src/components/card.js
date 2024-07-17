@@ -1,13 +1,8 @@
-import { openModal } from "./modal";
-
 // Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
 
-// Попап
-const popupCardImage = document.querySelector('.popup_type_image');
-
 // Функция создания карточки
-function createCard (itemCard, deleteCard, handleClickLikes) {
+function createCard (itemCard, deleteCard, handleClickLikes, openCardImage) {
 
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
@@ -19,7 +14,6 @@ function createCard (itemCard, deleteCard, handleClickLikes) {
   cardImage.src = itemCard.link;
   cardImage.alt = itemCard.name;
   cardTitle.textContent = itemCard.name;
-  
   
   // Добавляем обработчик события клика на изображение
   cardImage.addEventListener('click', () =>  openCardImage(itemCard));
@@ -40,25 +34,7 @@ function deleteCard (cardElement) {
 
 // Функция проверки наличия, установки и снятия лайка
 function handleClickLikes (cardLikeButton) {
-	
-  	if (cardLikeButton.classList.contains('card__like-button_is-active')) {
-			cardLikeButton.classList.remove('card__like-button_is-active');
-	} else {
-		cardLikeButton.classList.add('card__like-button_is-active');
-	}
-}
-
-// Функция создания модального окна картинки
-function openCardImage(itemImage) {
-  const popupImage = popupCardImage.querySelector('.popup__image');
-  const popupCaption = popupCardImage.querySelector('.popup__caption');
-
-  // Заполняем атрибуты картинки и текста данными
-  popupImage.src = itemImage.link;
-  popupImage.alt = itemImage.name;
-  popupCaption.textContent = itemImage.name;
-
-	openModal(popupCardImage);
+	  cardLikeButton.classList.toggle('card__like-button_is-active');
 }
 
 export { createCard, deleteCard, handleClickLikes }

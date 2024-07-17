@@ -20,6 +20,7 @@ const buttonProfileAdd = document.querySelector('.profile__add-button');
 const editForm = document.querySelector('.popup_type_edit');
 const popupsArray = Array.from(document.querySelectorAll('.popup'));
 const newCardForm = document.querySelector('.popup_type_new-card');
+const popupCardImage = document.querySelector('.popup_type_image');
 
 // Контейнер для карточек
 const placesList = document.querySelector('.places__list');
@@ -35,14 +36,26 @@ const userJob = document.querySelector('.profile__description');
 
 ///////////////////////////////ФУНКЦИИ И КОД\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-
 // Вывести карточки на страницу
 function renderCards() {
   initialCards.forEach(function(itemCard) {
-   cardsContainer.append(createCard(itemCard, deleteCard, handleClickLikes));
+   cardsContainer.append(createCard(itemCard, deleteCard, handleClickLikes, openCardImage));
   });
 }
 renderCards();
+
+// Функция создания модального окна картинки
+function openCardImage(itemImage) {
+  const popupImage = popupCardImage.querySelector('.popup__image');
+  const popupCaption = popupCardImage.querySelector('.popup__caption');
+
+  // Заполняем атрибуты картинки и текста данными
+  popupImage.src = itemImage.link;
+  popupImage.alt = itemImage.name;
+  popupCaption.textContent = itemImage.name;
+
+	openModal(popupCardImage);
+}
 
 // Отслеживание клика на кнопку открытия формы редактирования профиля
 buttonProfileEdit.addEventListener('click', function(evt) {
@@ -64,9 +77,8 @@ popupsArray.forEach((popup) => {
   closeButton.addEventListener("click", handleClickCloseButton);
 });
 
-
 // Обработчик «отправки» формы редактирования профиля, (хотя пока она никуда отправляться не будет)
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   // Так мы можем определить свою логику отправки.
   // О том, как это делать, расскажем позже.
@@ -86,7 +98,7 @@ function handleFormSubmit(evt) {
 }
 
 // Прикрепляем обработчик к форме:он следит за событием “submit” - «отправка»
-formElement.addEventListener('submit', handleFormSubmit); 
+formElement.addEventListener('submit', handleProfileFormSubmit); 
 
 // Отслеживание клика на кнопку открытия формы добавления карточки
 buttonProfileAdd.addEventListener('click', () => {
@@ -120,6 +132,3 @@ function handleNewCardFormSubmit(evt) {
 
 // Прикрепляем обработчик к форме:он следит за событием “submit” - «отправка»
 newPlaceForm.addEventListener('submit', handleNewCardFormSubmit); 
-
-
-
