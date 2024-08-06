@@ -14,27 +14,27 @@ function createCard (itemCard, deleteCard, handleClickLikes, openCardImage) {
   cardImage.src = itemCard.link;
   cardImage.alt = itemCard.name;
   cardTitle.textContent = itemCard.name;
-  
-  // Добавляем обработчик события клика на изображение
-  cardImage.addEventListener('click', () =>  openCardImage(itemCard));
-  
+    
 	// Добавляем обработчик события клика на "КОРЗИНУ"
   cardDeleteButton.addEventListener('click', () => deleteCard(cardElement)); 
 
 	// Добавляем обработчик события клика на лайк
 	cardLikeButton.addEventListener('click', () => handleClickLikes (cardLikeButton));
 
+  // Добавляем обработчик события клика на изображение
+  cardImage.addEventListener('click', () =>  openCardImage(itemCard));
+
   return cardElement;
-}
+};
 
 // Функция удаления карточки  
 function deleteCard (cardElement) {
   cardElement.remove();
-}
+};
 
 // Функция проверки наличия, установки и снятия лайка
 function handleClickLikes (cardLikeButton) {
 	  cardLikeButton.classList.toggle('card__like-button_is-active');
-}
+};
 
 export { createCard, deleteCard, handleClickLikes }

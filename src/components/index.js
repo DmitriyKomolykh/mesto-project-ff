@@ -2,6 +2,7 @@ import '../pages/index.css'; // импорт главного файла сти�
 import { initialCards } from './cards.js'; // Импорт данных для вывода готовых карточек на страницу
 import { openModal, closeModal,  handleClickOverlay, handleClickCloseButton } from './modal.js'; // Импорт функций для работы с модальными окнами
 import { createCard, deleteCard, handleClickLikes }  from './card.js'; //Импорт функции создания карточки
+import { enableValidation, clearValidation } from './validation';
 
 ///////////////////////КОНСТАНТЫ\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -9,7 +10,7 @@ import { createCard, deleteCard, handleClickLikes }  from './card.js'; //Имп�
 const cardsContainer = document.querySelector('.places__list');
 
 // Находим форму в DOM
-const formElement = document.forms['edit-profile'];
+const editFormElement = document.forms['edit-profile'];
 const newPlaceForm = document.forms['new-place'];
 
 // Кнопки
@@ -33,6 +34,20 @@ const jobInput = document.querySelector('.popup__input_type_description');
 const userName = document.querySelector('.profile__title');
 const userJob = document.querySelector('.profile__description');
 
+const popupImage = popupCardImage.querySelector('.popup__image');
+const popupCaption = popupCardImage.querySelector('.popup__caption');
+
+
+
+// Константы функции валидации форм
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
 
 ///////////////////////////////ФУНКЦИИ И КОД\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -46,35 +61,42 @@ renderCards();
 
 // Функция создания модального окна картинки
 function openCardImage(itemImage) {
-  const popupImage = popupCardImage.querySelector('.popup__image');
-  const popupCaption = popupCardImage.querySelector('.popup__caption');
-
+ 
   // Заполняем атрибуты картинки и текста данными
   popupImage.src = itemImage.link;
   popupImage.alt = itemImage.name;
   popupCaption.textContent = itemImage.name;
 
 	openModal(popupCardImage);
-}
+};
 
 // Отслеживание клика на кнопку открытия формы редактирования профиля
 buttonProfileEdit.addEventListener('click', function(evt) {
+  clearValidation(editFormElement, validationConfig);
   setInitialEditProfileFormValues();
   openModal(editForm);
+});
+
+// Отслеживание клика на кнопку открытия формы добавления карточки
+buttonProfileAdd.addEventListener('click', () => {
+  // popupNewCardForm.reset();
+  // clearValidation(newCardForm, validationConfig);
+  clearValidation(newPlaceForm, validationConfig);
+  openModal(newCardForm);
 });
 
 // Установка начальных значений в форме редактирования профиля
 function setInitialEditProfileFormValues() {
   nameInput.value = userName.textContent;
   jobInput.value = userJob.textContent;
-}
+};
 
 // Отслеживание клика на оверлей и кнопку закрытия 
 // для закрытия модального окна 
 popupsArray.forEach((popup) => {
-  popup.addEventListener("click", handleClickOverlay);
-  const closeButton = popup.querySelector(".popup__close");
-  closeButton.addEventListener("click", handleClickCloseButton);
+  popup.addEventListener('click', handleClickOverlay);
+  const closeButton = popup.querySelector('.popup__close');
+  closeButton.addEventListener('click', handleClickCloseButton);
 });
 
 // Обработчик «отправки» формы редактирования профиля, (хотя пока она никуда отправляться не будет)
@@ -91,16 +113,10 @@ function handleProfileFormSubmit(evt) {
   userName.textContent = nameUser;
   userJob.textContent = aboutUser;
   closeModal(editForm);
-}
-
+};
 
 // Прикрепляем обработчик к форме:он следит за событием “submit” - «отправка»
-formElement.addEventListener('submit', handleProfileFormSubmit); 
-
-// Отслеживание клика на кнопку открытия формы добавления карточки
-buttonProfileAdd.addEventListener('click', () => {
-  openModal(newCardForm);
-});
+editFormElement.addEventListener('submit', handleProfileFormSubmit); 
 
 // Обработчик «отправки» формы добавления карточки
 function handleNewCardFormSubmit(evt) {
@@ -114,7 +130,7 @@ function handleNewCardFormSubmit(evt) {
   const newItem = {
     name: newPlaceNameInput.value,
     link: newLinkInput.value
-  };
+  }
 
   // Создаем элемент карточки и добавляем его на страницу
   const newCardElement = createCard(newItem, deleteCard, handleClickLikes);
@@ -129,3 +145,6 @@ function handleNewCardFormSubmit(evt) {
 
 // Прикрепляем обработчик к форме:он следит за событием “submit” - «отправка»
 newPlaceForm.addEventListener('submit', handleNewCardFormSubmit); 
+
+// Вызываем функцию валидации форм
+enableValidation(validationConfig); 

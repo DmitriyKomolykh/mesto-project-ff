@@ -16,8 +16,7 @@
     <img  alt="Логотип проекта масто" class="logo header__logo" src="<%=require('./images/logo.svg')%>"/>
   </header>
 
-  <main class="content">
-    
+  <main class="content">    
     <section class="profile page__section">
       <div class="profile__image" style="background-image: url('<%= require(`./images/avatar.jpg`)%>')"> </div>
       <div class="profile__info">
@@ -44,9 +43,44 @@
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="edit-profile">
-        <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" required>
-        <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
+      <!-- Correction -->
+      <form 
+        class="popup__form" 
+        name="edit-profile" 
+        novalidate
+        >
+        <input 
+          type="text" 
+          name="name" 
+          class="popup__input popup__input_type_name" 
+          placeholder="Имя" 
+          id="name"
+          minlength="2"
+          maxlength="40"
+          pattern="^[А-яЁёA-z\s\-]+$"
+          data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+          required
+          />
+        <span 
+          id="name-error" 
+          class="popup__error name-error"
+        ></span>
+        <input 
+          type="text" 
+          name="description"
+          id="description"
+          class="popup__input popup__input_type_description" 
+          placeholder="О себе" 
+          minlength="2"
+          maxlength="200"
+          pattern="^[А-яЁёA-z\s\-]+$"
+          data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+          required
+        />
+        <span
+        id="description-error"
+        class="popup__error description-error"
+      ></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -54,12 +88,47 @@
 
   <div class="popup popup_type_new-card">
     <div class="popup__content">
-      <button type="button" class="popup__close"></button>
+      <button 
+        type="button" 
+        class="popup__close"
+        ></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="new-place">
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
-        <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
-        <button type="submit" class="button popup__button">Сохранить</button>
+      <!-- Correction -->
+      <form 
+        class="popup__form" 
+        name="new-place" 
+        novalidate
+        >
+        <input 
+          type="text" 
+          name="place-name" 
+          class="popup__input popup__input_type_card-name" 
+          placeholder="Название"
+          id="place-name"
+          minlength="2"
+          maxlength="30"
+          pattern="^[А-яЁёA-z\s\-]+$"
+          data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+          required
+        />
+        <span
+          id="place-name-error"
+          class="popup__error place-name-error"
+        ></span>
+        <input 
+          type="url" 
+          name="link"
+          id="link"
+          class="popup__input popup__input_type_url" 
+          placeholder="Ссылка на картинку" 
+          data-error-message="Разрешены только ссылки на изображения"
+          required
+        />
+        <span 
+          id="link-error"
+          class="popup__error link-error"
+        ></span>
+        <button type="submit" class="button popup__button">Создать</button>
       </form>
     </div>
   </div>
@@ -72,6 +141,20 @@
     </div>
   </div>
 </div>
+
+
+<!-- <div class="popup popup_type_delete-card popup_is-animated">
+  <div class="popup__content popup__content_content_delete-card">
+    <button type="button" class="popup__close"></button>
+    <h3 class="popup__title">Вы уверены?</h3>
+    <form class="popup__form" name="delete-card" novalidate>
+      <button type="submit" class="button popup__button">Да</button>
+    </form>
+  </div>
+</div> -->
+
+
+
 
 <!-- <script src="./scripts/cards.js"></script> -->
 <!-- <script src="./scripts/index.js" defer></script> -->
