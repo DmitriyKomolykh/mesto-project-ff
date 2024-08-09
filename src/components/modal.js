@@ -7,8 +7,8 @@ function openModal(popup) {
 // функции для закрытия всплывающих окон
 function closeModal(popup) {
   if (popup) {
-    popup.classList.remove("popup_is-opened");
-    document.removeEventListener("keydown", handleEscClick);
+    popup.classList.remove('popup_is-opened');
+    document.removeEventListener('keydown', handleEscClick);
   }
 }
 

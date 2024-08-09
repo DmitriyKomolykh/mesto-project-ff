@@ -4,7 +4,6 @@
 const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 	inputElement.classList.add(validationConfig.inputErrorClass);
-  // errorElement.textContent = inputElement.validationMessage;
   errorElement.textContent = errorMessage;
  	errorElement.classList.add(validationConfig.errorClass);
 };
@@ -12,11 +11,9 @@ const showInputError = (formElement, inputElement, errorMessage, validationConfi
 // Функция скрытия отображения ошибки ввода
 const hideInputError = (formElement, inputElement, validationConfig) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  // if (errorElement) {
   inputElement.classList.remove(validationConfig.inputErrorClass);
 	errorElement.classList.remove(validationConfig.errorClass);
   errorElement.textContent = '';
-// }
 };
 
 // Функция проверки валидности поля
@@ -44,10 +41,8 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonElement, validationConfig) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(validationConfig.inactiveButtonClass);
-    // buttonElement.disabled = true;
   } else {
     buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-    // buttonElement.disabled = false;
   }
 };
 
@@ -75,26 +70,23 @@ const enableValidation = (validationConfig) => {
   });
 };
 
-// функция которая очищает ошибки валидации формы
-//  и делает кнопку неактивной.
+// функция которая очищает ошибки валидации формы и делает кнопку неактивной.
 const clearValidation = (formElement, validationConfig) => {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
   buttonElement.classList.add(validationConfig.inactiveButtonClass);
-
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement, validationConfig);
     inputElement.setCustomValidity('');
     if (hasInvalidInput(inputList)) {
-      document.getElementById("name").value= '';
-      document.getElementById("description").value= '';
-      document.getElementById("place-name").value= '';
-      document.getElementById("link").value= '';
+      document.getElementById('name').value= '';
+      document.getElementById('description').value= '';
+      document.getElementById('place-name').value= '';
+      document.getElementById('link').value= '';
     }
   });
   toggleButtonState(inputList, buttonElement, validationConfig);
 };
-
 
 export { enableValidation, clearValidation }
 
