@@ -14,46 +14,41 @@
 }
 
 
-/* .profile__image:hover {
-  cursor: pointer;
-   opacity: 0.6;  */
-   /*в Figma 0,8 но мне кажется должно быть темнее */
-  /* -webkit-transition: 0.3s;
+.profile__image:hover {
+  cursor: none;
+  opacity: 0.6; 
+  -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
-} */
+}
 
-/* .profile__image::before {
+.profile__image::before {
   position: absolute;
   content: '';
   top: 50%;
-  left: 50%;
+  left: 7%;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
+  width: 11%;
+  height: 70%;
   opacity: 0;
   background: transparent url("../../../images/edit-icon.svg") center no-repeat;
   background-size: 26px 26px;
-} */
+}
 
-/* .profile__image:hover::before {
+.profile__image:hover::before {
   opacity: 1;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
-} */
-
-
-
-
+}
 
 @media screen and (max-width: 740px) {
   .profile__image {
