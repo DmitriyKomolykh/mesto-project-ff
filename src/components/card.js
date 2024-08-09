@@ -19,7 +19,7 @@ function createCard (itemCard, deleteCard, openCardImage, handleClickLikes, user
   cardImage.alt = itemCard.name;
   cardTitle.textContent = itemCard.name;
   cardLikeCount.textContent = itemCard.likes.length;
-    
+
 	// Добавляем обработчик события клика на "КОРЗИНУ", если пользователь является владельцем
   if ( userId !== itemCard.owner._id ) {
     cardDeleteButton.style.display = 'none';
@@ -42,9 +42,10 @@ function createCard (itemCard, deleteCard, openCardImage, handleClickLikes, user
   });
 
   // Добавляем обработчик события клика на изображение
-  cardImage.addEventListener('click', () =>  openCardImage(itemCard));
-
-  return cardElement;
+  cardImage.addEventListener('click', () =>  {
+      openCardImage(itemCard)
+  })
+   return cardElement;
 };
 
 // Функция подсчета лайков

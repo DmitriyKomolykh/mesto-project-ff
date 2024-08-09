@@ -56,7 +56,6 @@ let userId = '';
 
 // Функция для рендеринга карточек на страницу
 function renderCards(initialCards, userId) {
-  // placesList.innerHTML = '';
   initialCards.forEach((itemCard) => {
     const cardElement = createCard(itemCard, deleteCard, openCardImage, handleClickLikes, userId);
     placesList.appendChild(cardElement);
@@ -136,7 +135,7 @@ function handleProfileFormSubmit (evt) {
 }
 
 // Функция обработчика «отправки» формы добавления карточки
-function handleNewCardFormSubmit (evt, deleteCard, handleClickLikes, openCardImage, userId) {
+function handleNewCardFormSubmit (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   // Функция выполнения запроса на сервер
   const makeRequest = async () => {
@@ -152,13 +151,11 @@ function handleNewCardFormSubmit (evt, deleteCard, handleClickLikes, openCardIma
     return postNewCard(newPlaceNameInput.value, newLinkInput.value)
       .then((newItem) => {
         // Создаем элемент для новой карточки
-        const newCardElement = createCard(newItem, deleteCard, openCardImage, handleClickLikes, userId, placesList);
+        const newCardElement = createCard(newItem, deleteCard, openCardImage, handleClickLikes, userId);
         // Добавляем созданный элемент на страницу
         placesList.prepend(newCardElement); //
         // Закрытие попапа после успешного добавления карточки
         closeModal(newCardForm); 
-        // newCardForm.reset();
-        // clearValidation(newCardForm, validationConfig);
       });
   }
   handleSubmit(makeRequest, evt);
