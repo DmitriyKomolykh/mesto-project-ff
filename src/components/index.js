@@ -1,7 +1,7 @@
 import '../pages/index.css'; // импорт главного файла стилей 
 // import { initialCards } from './cards.js'; // Импорт данных для вывода готовых карточек на страницу
 import { openModal, closeModal,  handleClickOverlay, handleClickCloseButton } from './modal.js'; // Импорт функций для работы с модальными окнами
-import { createCard, deleteCard, handleClickLikes, handleCardDelete }  from './card.js'; //Импорт функции создания карточки
+import { createCard, openPopupDelete, handleClickLikes, handleCardDelete }  from './card.js'; //Импорт функции создания карточки
 import { enableValidation, clearValidation } from './validation';
 import { updateInfoUser, postNewCard,updateAvatarUser, getInitialInfo } from './api.js'; // Импорт функций для работы с API
 
@@ -12,7 +12,7 @@ const placesList = document.querySelector('.places__list'); // Контейне�
 
 // Находим форму в DOM
 const editFormElement = document.forms['edit-profile'];
-const newPlaceForm = document.forms['new-place'];
+const newPlaceForm = document.forms['new-place']; // 12345
 const avatarForm = document.forms['edit-avatar'];
 const deleteCardForm = document.forms['delete-card'];
 
@@ -57,7 +57,7 @@ let userId = '';
 // Функция для рендеринга карточек на страницу
 function renderCards(initialCards, userId) {
   initialCards.forEach((itemCard) => {
-    const cardElement = createCard(itemCard, deleteCard, openCardImage, handleClickLikes, userId);
+    const cardElement = createCard(itemCard, openPopupDelete, openCardImage, handleClickLikes, userId);
     placesList.appendChild(cardElement);
   });
 }
@@ -151,7 +151,7 @@ function handleNewCardFormSubmit (evt) {
     return postNewCard(newPlaceNameInput.value, newLinkInput.value)
       .then((newItem) => {
         // Создаем элемент для новой карточки
-        const newCardElement = createCard(newItem, deleteCard, openCardImage, handleClickLikes, userId);
+        const newCardElement = createCard(newItem, openPopupDelete, openCardImage, handleClickLikes, userId);
         // Добавляем созданный элемент на страницу
         placesList.prepend(newCardElement); //
         // Закрытие попапа после успешного добавления карточки
@@ -188,7 +188,7 @@ buttonProfileEdit.addEventListener('click', () => {
 
 // Отслеживание клика на кнопку открытия формы добавления карточки
 buttonProfileAdd.addEventListener('click', () => {
-  clearValidation(newCardForm, validationConfig);
+  clearValidation(newPlaceForm, validationConfig);
   openModal(newCardForm);
 });
 
@@ -201,7 +201,7 @@ popupsArray.forEach((popup) => {
 
 // Отслеживание клика на аватар
 avatarEditButton.addEventListener('click', () => {
-  clearValidation(popupAvatarForm, validationConfig);
+  clearValidation(avatarForm, validationConfig);
   setInitialEditProfileFormValues();
   openModal(popupAvatarForm);
 });
@@ -218,10 +218,8 @@ deleteCardForm.addEventListener('submit', handleCardDelete);
 
 // Вызываем функцию запросов на сервер для получения карточек и информации о пользователе
 getInitialInfo()
-.then((res) => {
-  const userInfo = res[0];
+.then(([userInfo, initialCards]) => {
   userId = userInfo._id;
-  const initialCards = res[1];
   fillProfileInfo(userInfo);
   renderCards(initialCards, userId);
 })

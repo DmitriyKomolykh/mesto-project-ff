@@ -6,7 +6,7 @@ const cardTemplate = document.querySelector('#card-template').content;
 const deletePopup = document.querySelector('.popup_type_delete-card');
 
 // Функция создания карточки
-function createCard (itemCard, deleteCard, openCardImage, handleClickLikes, userId) {
+function createCard (itemCard, openPopupDelete, openCardImage, handleClickLikes, userId) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
@@ -50,28 +50,15 @@ function createCard (itemCard, deleteCard, openCardImage, handleClickLikes, user
 
 // Функция подсчета лайков
 function handleClickLikes ( itemCard, cardLikeCount, cardLikeButton ) {
-  if (cardLikeButton.classList.contains('card__like-button_is-active')) {
-    //  Удаление лайка
-    deleteLikeCard(itemCard._id)
-    .then((res) => {
-      cardLikeButton.classList.toggle('card__like-button_is-active');
-      cardLikeCount.textContent = res.likes.length;
-    })
-    .catch((err) => {
-      console.log(`Ошибка удаления лайка: ${err}`);
-    });
-  } else {
-    // добавление лайка
-    addLikeCard(itemCard._id)
-    .then((res) => {
-      cardLikeButton.classList.toggle('card__like-button_is-active');
-      cardLikeCount.textContent = res.likes.length;
-    })
-    .catch((err) => {
-      console.log(`Ошибка добавления лайка: ${err}`);
-    });
-  }
-}
+  const isLiked = cardLikeButton.classList.contains('card__like-button_is-active');
+  const likeMethod = isLiked ? deleteLikeCard : addLikeCard;
+  likeMethod(itemCard._id) 
+          .then((res) => {
+             cardLikeButton.classList.toggle('card__like-button_is-active'); 
+             cardLikeCount.textContent = res.likes.length;
+          })
+  .catch(err => console.log(`Ошибка ${isLiked ? 'удаления' : 'добавления'} лайка: ${err})`)
+)}
 
 //////////////////////// Удаления карточки ///////////////////////////////
 let selectedCard;

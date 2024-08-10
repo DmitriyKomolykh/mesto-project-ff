@@ -41,8 +41,10 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonElement, validationConfig) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(validationConfig.inactiveButtonClass);
+    buttonElement.disabled = true;
   } else {
     buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+    buttonElement.disabled = false;
   }
 };
 
@@ -78,12 +80,13 @@ const clearValidation = (formElement, validationConfig) => {
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement, validationConfig);
     inputElement.setCustomValidity('');
-    if (hasInvalidInput(inputList)) {
-      document.getElementById('name').value= '';
-      document.getElementById('description').value= '';
-      document.getElementById('place-name').value= '';
-      document.getElementById('link').value= '';
-    }
+    // if (hasInvalidInput(inputList)) {
+    //   document.getElementById('name').value= '';
+    //   document.getElementById('description').value= '';
+    //   document.getElementById('place-name').value= '';
+    //   document.getElementById('link').value= '';
+    // }
+    formElement.reset(inputElement);
   });
   toggleButtonState(inputList, buttonElement, validationConfig);
 };
